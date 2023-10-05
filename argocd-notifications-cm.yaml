@@ -6,7 +6,7 @@ metadata:
   namespace: argocd
 data: 
   template.app-sync-status: 
-    webhook:
+    webhook: |
       sn_devops_argocd:
         method: POST
         body:

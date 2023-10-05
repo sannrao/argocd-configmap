@@ -5,8 +5,8 @@ metadata:
   name: argocd-notifications-cm
   namespace: argocd
 data: 
-  template.app-sync-status: 
-    webhook: |
+  template.app-sync-status: |
+    webhook: 
       sn_devops_argocd:
         method: POST
         body:

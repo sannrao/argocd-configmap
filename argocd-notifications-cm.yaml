@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2023-09-29T18:12:58Z"
+  name: argocd-notifications-cm
+  namespace: argocd
+data: 
+  template.app-sync-status: 
+    webhook:
+      sn_devops_argocd:
+        method: POST
+        body:
+          | 
+            { "titleLink": "https://argocd.k8s.sndevops.xyz/applications/{{.app.metadata.name}}",
+              "syncStatus":"{{.app.status.sync.status}}",
+              "repo":"{{.app.spec.source.repoURL}}",
+              "revision":"{{.app.status.sync.revision}}",
+              "commitAuthor":"{{(call .repo.GetCommitMetadata .app.status.sync.revision).Author}}",
+              "commitTags":"{{(call .repo.GetCommitMetadata .app.status.sync.revision).Tags}}",
+              "appName":"{{.app.metadata.name}}",
+              "startedAt":"{{.app.status.operationState.startedAt}}",
+              "finishedAt":"{{.app.status.operationState.finishedAt}}",
+              "message":"{{.app.status.operationState.message}}"
+            }
